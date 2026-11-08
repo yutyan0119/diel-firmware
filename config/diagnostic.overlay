@@ -1,0 +1,11 @@
+/ {
+    chosen {
+        zephyr,shell-uart = &prec_shell_uart;
+    };
+};
+
+&zephyr_udc0 {
+    prec_shell_uart: prec_shell_uart {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};

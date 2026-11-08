@@ -1,0 +1,3 @@
+description: Cached two-cell alkaline battery measurement from the PREC EC scanner
+compatible: "prec,alkaline-battery"
+include: sensor-device.yaml

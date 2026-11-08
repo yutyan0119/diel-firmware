@@ -1,0 +1,40 @@
+description: PREC wireless dual-4051 electrocapacitive scanner (absolute Nordic GPIO numbers)
+compatible: "prec,ec-kscan"
+include: kscan.yaml
+properties:
+  row-pins:
+    type: array
+    required: true
+  mux-select-pins:
+    type: array
+    required: true
+  mux-enable-pins:
+    type: array
+    required: true
+  column-channels:
+    type: array
+    required: true
+  discharge-pin:
+    type: int
+    required: true
+  discharge-active-high:
+    type: boolean
+    description: |
+      Drive the local TMUX1101 reset switch with push-pull logic (rev2).
+      High clamps EC_HOLD and Low releases it. When absent (rev1), use
+      open-drain Low to clamp EC_HOLD and high impedance to release it.
+  amplifier-pin:
+    type: int
+    required: true
+  battery-enable-pin:
+    type: int
+    required: true
+  wake-pin:
+    type: int
+    required: true
+  ec-analog-input:
+    type: int
+    required: true
+  battery-analog-input:
+    type: int
+    required: true

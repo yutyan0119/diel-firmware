@@ -1,0 +1,31 @@
+name: Build DIEL firmware
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    container: zmkfirmware/zmk-build-arm@sha256:edb1c953438c6f720ddb79c3762f3972013b7fbbaf4fff3592fc869983e7afc5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+      - name: Test and build all DIEL variants
+        run: bash tools/build.sh
+      - name: Collect license notices and source references
+        env:
+          SOURCE_URL: ${{ github.server_url }}/${{ github.repository }}/tree/${{ github.sha }}
+        run: |
+          cp -R LICENSE THIRD_PARTY.md licenses dist/
+          printf 'DIEL source and build scripts: %s\n' "$SOURCE_URL" > dist/SOURCE.txt
+          python3 tools/collect-notices.py .west-workspace dist/third-party
+          cd dist && sha256sum ./*.uf2 > SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: diel-uf2
+          path: dist/
+          if-no-files-found: error

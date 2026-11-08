@@ -1,0 +1,4 @@
+/.west-workspace/
+/build/
+/dist/
+__pycache__/

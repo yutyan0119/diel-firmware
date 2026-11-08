@@ -1,0 +1,76 @@
+config KSCAN_PREC_EC
+    bool "PREC wireless electrocapacitive scanner"
+    default y if DT_HAS_PREC_EC_KSCAN_ENABLED
+    depends on SOC_NRF52840
+    select NRFX_PPI
+    select SENSOR
+
+if KSCAN_PREC_EC
+
+config PREC_EC_PRESS_DELTA
+    int "Press threshold above each key's startup baseline (12-bit ADC counts)"
+    range 2 3000
+    default 250
+
+config PREC_EC_RELEASE_DELTA
+    int "Release threshold above startup baseline"
+    range 1 2999
+    default 180
+
+config PREC_EC_SAMPLE_DELAY_US
+    int "Delay from hardware ROW rising edge to SAADC SAMPLE task"
+    range 1 60
+    default 7
+
+config PREC_EC_REPORT_KEYS
+    bool "Report keys immediately after startup calibration"
+    default y
+
+config PREC_EC_ACTIVE_PERIOD_MS
+    int "Scan period during activity (must accommodate the measured frame)"
+    range 1 20
+    default 6
+
+config PREC_EC_IDLE_PERIOD_MS
+    int "Scan period after one second without activity"
+    range 1 100
+    default 20
+
+config PREC_EC_AUTO_SCAN
+    bool "Start EC measurements automatically"
+    default y
+
+config PREC_EC_KEY_STANDBY
+    bool "After inactivity, scan only one key for a wake hold"
+    default n
+
+if PREC_EC_KEY_STANDBY
+
+config PREC_EC_STANDBY_TIMEOUT_MS
+    int "Battery-only inactivity timeout before single-key standby (ms)"
+    range 1000 3600000
+    default 300000
+
+config PREC_EC_STANDBY_PERIOD_MS
+    int "Single-key scan period in standby (ms)"
+    range 10 1000
+    default 50
+
+config PREC_EC_STANDBY_HOLD_MS
+    int "Continuous wake-key hold before resuming (ms)"
+    range 100 5000
+    default 300
+
+config PREC_EC_STANDBY_ROW
+    int "Physical wake-key row"
+    range 0 3
+    default 3
+
+config PREC_EC_STANDBY_COL
+    int "Physical wake-key column"
+    range 0 11
+    default 5
+
+endif
+
+endif

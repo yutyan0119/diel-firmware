@@ -1,0 +1,9 @@
+if BOARD_DIEL
+
+config ZMK_KEYBOARD_NAME
+    default "DIEL"
+
+config BT_CTLR
+    default BT
+
+endif

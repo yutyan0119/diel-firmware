@@ -1,0 +1,21 @@
+/dts-v1/;
+
+#include "diel-hardware.dtsi"
+#include "diel-layout.dtsi"
+
+/ {
+    model = "DIEL (BC-0302)";
+    compatible = "prec,diel";
+
+    chosen {
+        zmk,physical-layout = &diel_layout;
+    };
+};
+
+&ec_scan {
+    discharge-active-high;
+};
+
+&diel_layout {
+    transform = <&default_transform>;
+};
